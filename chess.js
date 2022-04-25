@@ -87,8 +87,19 @@ function onClick(event) {
     if (checkValidMovement(x, y) === true) {
         if (checkValidCapture(x, y) === true) {
             if (board.tiles[y][x].pieceType === KING) {
-                if (currentTeam === WHITE) whiteVictories++;
-                else blackVictories++;
+                if (currentTeam === WHITE){
+                    whiteVictories++;
+                    db.collection('score').add({
+                        wscore: whiteVictories
+                    });
+                } 
+
+                else{ 
+                    blackVictories++;
+                    db.collection('score').add({
+                        bscore: blackVictories
+                    });
+                }
 
                 startGame();
             }
@@ -433,3 +444,21 @@ class Tile {
         this.team = team;
     }
 }
+
+function displayScores(doc) {
+    let li = document.createElement('li');
+    let bscore = document.createElement('span');
+    let wscore = document.createElement('span');
+
+    li.setAttribute('data-id', doc.id);  
+    whiteVictories = doc.data().bscore;
+    whiteVictories = doc.data().wscore;
+    li.appendChild(bscore);
+    li.appendChild(wscore);
+}
+
+db.collection('score').get().then(snapshot => {
+    snapshot.docs.forEach(doc => {
+        displayScores(doc);
+    });
+});

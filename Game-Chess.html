@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 
 <head>
+    <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-firestore.js"></script>
     <title>Chess</title>
     <meta charset="UTF-8">
+    
+    
     <body>
         <h1>Game Chess - Assignment B25</h1>
         <canvas id="canvas" width="400" height="400" style="margin-left:37%;"></canvas>
@@ -12,8 +16,24 @@
         <h2>Black pieces lost:</h2>
         <h3 id="blackCasualities"></h2>
         <h2 id="totalVictories"></h2>
+        <ul id="score"></ul>
         <script src="chess.js"></script>
+        <script>
+            const firebaseConfig = {
+            apiKey: "AIzaSyDUCPgsZ7IBaB_CxJfU8sKJlVMf6-IB3LQ",
+            authDomain: "chess-9c237.firebaseapp.com",
+            projectId: "chess-9c237",
+            storageBucket: "chess-9c237.appspot.com",
+            messagingSenderId: "164982302026",
+            appId: "1:164982302026:web:cc215c3f2d5d6770448db3"
+            };
+            firebase.initializeApp(firebaseConfig);
+            const db = firebase.firestore();
+            db.settings({timestampsInSnapshots: true});
+        </script>
+    
     </body>
+    
 	<style>
 		h1,h2,h3{
 			text-align:center;
